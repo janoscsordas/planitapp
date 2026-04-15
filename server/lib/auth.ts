@@ -11,6 +11,16 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
+        onExistingUserSignUp: async ({ user }, request) => {
+            // TODO: Send email that someone tried to sign up with their email address
+        },
+        sendResetPassword: async ({ user, url, token }) => {
+            // TODO: Send reset password email
+        },
+        onPasswordReset: async ({ user }, request) => {
+            // TODO: Send password reset confirmation email
+        },
+        revokeSessionsOnPasswordReset: true,
     },
     socialProviders: {
         github: {
@@ -40,9 +50,10 @@ export const auth = betterAuth({
             void sendVerificationEmail({
                 to: user.email,
                 name: user.name,
-                subject: "Regisztráció Megerősítése",
                 url: url
             })
         },
+        autoSignInAfterVerification: true,
+        expiresIn: 30 * 60, // 30 minutes expire time for the verification link
     }
 });
