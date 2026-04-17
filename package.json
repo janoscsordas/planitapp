@@ -15,10 +15,11 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
-    "better-auth": "^1.6.2",
+    "better-auth": "^1.6.5",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.12",
+    "hono": "^4.12.14",
     "postgres": "^3.4.9",
-    "resend": "^6.11.0"
+    "resend": "^6.12.0",
+    "zod": "^4.3.6"
   }
 }

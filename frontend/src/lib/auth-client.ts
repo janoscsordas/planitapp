@@ -5,7 +5,7 @@ export const authClient = createAuthClient({
     plugins: [
         lastLoginMethodClient(),
         organizationClient()
-    ]
+    ],
 })
 
 export async function signInWithGitHub() {

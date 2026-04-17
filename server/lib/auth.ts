@@ -5,15 +5,13 @@ import { db } from "../database/db";
 import { sendVerificationEmail } from "./send-email";
 
 export const auth = betterAuth({
+    baseURL: process.env.BETTER_AUTH_URL as string,
     database: drizzleAdapter(db, {
         provider: "pg"
     }),
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
-        onExistingUserSignUp: async ({ user }, request) => {
-            // TODO: Send email that someone tried to sign up with their email address
-        },
         sendResetPassword: async ({ user, url, token }) => {
             // TODO: Send reset password email
         },
@@ -28,6 +26,8 @@ export const auth = betterAuth({
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string
         }
     },
+    appName: "PlanitApp",
+    trustedOrigins: ["http://localhost:5173"],
     // cache session for 5 minutes in the cookies
     session: {
         cookieCache: {
@@ -55,5 +55,5 @@ export const auth = betterAuth({
         },
         autoSignInAfterVerification: true,
         expiresIn: 30 * 60, // 30 minutes expire time for the verification link
-    }
+    },
 });
