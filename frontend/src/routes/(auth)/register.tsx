@@ -5,11 +5,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { FieldGroup } from '#/components/ui/field'
 import { Field, FieldLabel, FieldError } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import { InputGroup, InputGroupAddon } from '#/components/ui/input-group'
-import { IconBrandGithub, IconLock } from "@tabler/icons-react"
+import { IconBrandGithub } from "@tabler/icons-react"
 import { Button } from '#/components/ui/button'
 import { Separator } from '#/components/ui/separator'
 import { authClient } from '#/lib/auth-client'
+import OAuthButton from '#/components/auth/oauth-button'
+import { Spinner } from '#/components/ui/spinner'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/(auth)/register')({
   component: RegisterPage,
@@ -17,30 +19,51 @@ export const Route = createFileRoute('/(auth)/register')({
 
 const registerFormSchema = z.object({
   email: z.email("Hibás email cím."),
-  password: z.string().min(8, "A jelszónak legalább 8 karakternek kell lennie.").max(24, "A jelszó maximum 24 karakter lehet."),
+  password: z
+    .string()
+    .min(8, "A jelszónak legalább 8 karakternek kell lennie.")
+    .max(24, "A jelszó maximum 24 karakter lehet.")
+    .regex(/[0-9]/, "A jelszónak tartalmaznia kell legalább egy számot.")
+    .regex(/[!@#$%^&*(),.?":{}|<>-]/, "A jelszónak tartalmaznia kell legalább egy speciális karaktert."),
+  passwordConfirm: z.string()
+}).refine((data) => data.password === data.passwordConfirm, {
+  message: "A jelszavak nem egyeznek",
+  path: ["passwordConfirm"],
 })
 
 function RegisterPage() {
+  const navigate = Route.useNavigate()
+
   const form = useForm({
     defaultValues: {
       email: '',
       password: '',
+      passwordConfirm: '',
     },
     validators: {
       onSubmit: registerFormSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value)
+      const { error } = await authClient.signUp.email({
+        name: value.email.split('@')[0],
+        email: value.email,
+        password: value.password,
+        callbackURL: '/onboarding',
+      })
+
+      if (error) {
+        toast.error(error.message, {
+          duration: 5000,
+        })
+        form.resetField('password')
+        form.resetField('passwordConfirm')
+      }
+      
+      if (!error) {
+        navigate({ to: '/verify-email' })
+      }
     },
   })
-
-  const continueWithGitHub = async () => {
-    await authClient.signIn.social({
-      provider: 'github',
-      callbackURL: '/projects',
-      errorCallbackURL: '/error',
-    })
-  }
 
   return (
     <main className='w-full min-h-screen flex justify-center items-center'>
@@ -94,21 +117,41 @@ function RegisterPage() {
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
-                      <InputGroup>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          type='password'
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder="**********"
-                          aria-invalid={isInvalid}
-                        />
-                        <InputGroupAddon align="inline-end">
-                          <IconLock />
-                        </InputGroupAddon>
-                      </InputGroup>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type='password'
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="**********"
+                        aria-invalid={isInvalid}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  )
+                }}
+              />
+              <form.Field
+                name="passwordConfirm"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Jelszó megerősítése</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type='password'
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="**********"
+                        aria-invalid={isInvalid}
+                      />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
@@ -120,22 +163,25 @@ function RegisterPage() {
           </form>
         </CardContent>
         <CardFooter className='flex flex-col gap-5'>
-          <Field orientation="horizontal">
-            <Button className="w-full" type="submit" form="register-form">
-              Regisztráció
-            </Button>
-          </Field>
+          <form.Subscribe 
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([, isSubmitting]) => (
+              <Field orientation="horizontal">
+                <Button className="w-full" type="submit" form="register-form" disabled={isSubmitting}>
+                  {isSubmitting ? <Spinner /> : 'Regisztráció'}
+                </Button>
+              </Field>
+            )}
+          />
           <div className="relative w-full">
             <Separator />
-            <p className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-center text-xs text-muted-foreground">
+            <p className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-muted font-medium px-3 text-center text-xs text-muted-foreground">
               VAGY
             </p>
           </div>
 
-          <Button variant="outline" className="w-full" onClick={() => continueWithGitHub()}>
-            <IconBrandGithub />
-            Folytatás GitHub fiókkal
-          </Button>
+          {/* GitHub OAuth button */}
+          <OAuthButton provider={{ id: 'github', name: 'Folytatás GitHub fiókkal', icon: <IconBrandGithub /> }} />
 
           <Separator />
           <p className="text-center text-xs text-muted-foreground">

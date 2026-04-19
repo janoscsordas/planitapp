@@ -12,10 +12,11 @@
     "drizzle-kit": "^0.31.10"
   },
   "peerDependencies": {
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "better-auth": "^1.6.5",
+    "disposable-email-domains-js": "^1.24.0",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.14",
     "postgres": "^3.4.9",

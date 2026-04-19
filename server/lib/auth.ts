@@ -3,12 +3,30 @@ import { lastLoginMethod, organization } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../database/db";
 import { sendVerificationEmail } from "./send-email";
+import { APIError, createAuthMiddleware } from "better-auth/api";
+import {
+  isDisposableEmail,
+  isDisposableEmailDomain,
+} from 'disposable-email-domains-js';
 
 export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_URL as string,
     database: drizzleAdapter(db, {
         provider: "pg"
     }),
+    hooks: {
+        before: createAuthMiddleware(async (ctx) => {
+            if (ctx.path !== "/sign-up/email") {
+                return;
+            }
+
+            if (isDisposableEmail(ctx.body.email) || isDisposableEmailDomain(ctx.body.email.split("@")[1])) {
+                throw new APIError("BAD_REQUEST", {
+                    message: "Eldobható e-mail címek nem engedélyezettek."
+                });
+            }
+        })
+    },
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,

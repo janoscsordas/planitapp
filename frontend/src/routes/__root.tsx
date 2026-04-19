@@ -1,13 +1,15 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
+import { Toaster } from 'sonner'
+import NotFoundRoot from '../components/not-found/not-found-root'
 
 import '../styles.css'
 
 export const Route = createRootRoute({
   component: RootComponent,
+  notFoundComponent: NotFoundRoot,
 })
 
 function RootComponent() {
@@ -27,6 +29,7 @@ function RootComponent() {
           },
         ]}
       />
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   )
 }
