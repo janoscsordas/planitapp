@@ -46,13 +46,6 @@ export const auth = betterAuth({
     },
     appName: "PlanitApp",
     trustedOrigins: ["http://localhost:5173"],
-    // cache session for 5 minutes in the cookies
-    session: {
-        cookieCache: {
-            enabled: true,
-            maxAge: 5 * 60,
-        },
-    },
     rateLimit: {
         enabled: true,
     },
@@ -68,7 +61,7 @@ export const auth = betterAuth({
             void sendVerificationEmail({
                 to: user.email,
                 name: user.name,
-                url: url
+                verificationLink: url
             })
         },
         autoSignInAfterVerification: true,

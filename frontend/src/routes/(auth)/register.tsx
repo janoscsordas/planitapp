@@ -43,26 +43,23 @@ function RegisterPage() {
       onSubmit: registerFormSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("HELLO")
-
-      const { error } = await authClient.signUp.email({
+      await authClient.signUp.email({
         name: value.email.split('@')[0],
         email: value.email,
         password: value.password,
         callbackURL: '/onboarding',
+      }, {
+        onError: (ctx) => {
+          toast.error(ctx.error.message, {
+            duration: 5000,
+          })
+          form.resetField('password')
+          form.resetField('passwordConfirm')
+        },
+        onSuccess: () => {
+          navigate({ to: '/verify-email' })
+        }
       })
-
-      if (error) {
-        toast.error(error.message, {
-          duration: 5000,
-        })
-        form.resetField('password')
-        form.resetField('passwordConfirm')
-      }
-      
-      if (!error) {
-        navigate({ to: '/verify-email' })
-      }
     },
   })
 
@@ -84,7 +81,7 @@ function RegisterPage() {
                   <div className="flex flex-col items-center gap-2 text-center">
                     <h1 className="text-2xl font-bold">Fiók Regisztráció</h1>
                     <p className="text-sm text-balance text-muted-foreground">
-                      Adja meg az e-mail címét a fiók létrehozásához
+                      Add meg az e-mail címed a fiók létrehozásához
                     </p>
                   </div>
                   <form.Field
@@ -200,7 +197,7 @@ function RegisterPage() {
             </CardContent>
           </Card>
           <FieldDescription className="px-6 text-center">
-            A folytatáshoz elfogadom a <Link to="/">Felhasználói Feltételeket</Link> és az <Link to="/">Adatvédelmi Szabályzatot</Link>.
+            A folytatással elfogadom a <Link to="/">Felhasználói Feltételeket</Link> és az <Link to="/">Adatvédelmi Szabályzatot</Link>.
           </FieldDescription>
         </div>
       </div>

@@ -10,25 +10,35 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as authVerifyEmailRouteImport } from './routes/(auth)/verify-email'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authForgetPasswordRouteImport } from './routes/(auth)/forget-password'
-import { Route as appSettingsRouteImport } from './routes/(app)/settings'
-import { Route as appProjectsIndexRouteImport } from './routes/(app)/projects.index'
-import { Route as appProjectsProjectSlugIndexRouteImport } from './routes/(app)/projects/$projectSlug.index'
-import { Route as appProjectsProjectSlugTasksRouteImport } from './routes/(app)/projects/$projectSlug/tasks'
+import { Route as AuthenticatedProjectsIndexRouteImport } from './routes/_authenticated/projects.index'
+import { Route as AuthenticatedProjectsProjectSlugIndexRouteImport } from './routes/_authenticated/projects/$projectSlug.index'
+import { Route as AuthenticatedProjectsProjectSlugTasksRouteImport } from './routes/_authenticated/projects/$projectSlug/tasks'
 
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const authVerifyEmailRoute = authVerifyEmailRouteImport.update({
   id: '/(auth)/verify-email',
@@ -50,76 +60,73 @@ const authForgetPasswordRoute = authForgetPasswordRouteImport.update({
   path: '/forget-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const appSettingsRoute = appSettingsRouteImport.update({
-  id: '/(app)/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const appProjectsIndexRoute = appProjectsIndexRouteImport.update({
-  id: '/(app)/projects/',
-  path: '/projects/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const appProjectsProjectSlugIndexRoute =
-  appProjectsProjectSlugIndexRouteImport.update({
-    id: '/(app)/projects/$projectSlug/',
-    path: '/projects/$projectSlug/',
-    getParentRoute: () => rootRouteImport,
+const AuthenticatedProjectsIndexRoute =
+  AuthenticatedProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
-const appProjectsProjectSlugTasksRoute =
-  appProjectsProjectSlugTasksRouteImport.update({
-    id: '/(app)/projects/$projectSlug/tasks',
+const AuthenticatedProjectsProjectSlugIndexRoute =
+  AuthenticatedProjectsProjectSlugIndexRouteImport.update({
+    id: '/projects/$projectSlug/',
+    path: '/projects/$projectSlug/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedProjectsProjectSlugTasksRoute =
+  AuthenticatedProjectsProjectSlugTasksRouteImport.update({
+    id: '/projects/$projectSlug/tasks',
     path: '/projects/$projectSlug/tasks',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
-  '/settings': typeof appSettingsRoute
   '/forget-password': typeof authForgetPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/verify-email': typeof authVerifyEmailRoute
-  '/projects/': typeof appProjectsIndexRoute
-  '/projects/$projectSlug/tasks': typeof appProjectsProjectSlugTasksRoute
-  '/projects/$projectSlug/': typeof appProjectsProjectSlugIndexRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/projects/': typeof AuthenticatedProjectsIndexRoute
+  '/projects/$projectSlug/tasks': typeof AuthenticatedProjectsProjectSlugTasksRoute
+  '/projects/$projectSlug/': typeof AuthenticatedProjectsProjectSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
-  '/settings': typeof appSettingsRoute
   '/forget-password': typeof authForgetPasswordRoute
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/verify-email': typeof authVerifyEmailRoute
-  '/projects': typeof appProjectsIndexRoute
-  '/projects/$projectSlug/tasks': typeof appProjectsProjectSlugTasksRoute
-  '/projects/$projectSlug': typeof appProjectsProjectSlugIndexRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/projects': typeof AuthenticatedProjectsIndexRoute
+  '/projects/$projectSlug/tasks': typeof AuthenticatedProjectsProjectSlugTasksRoute
+  '/projects/$projectSlug': typeof AuthenticatedProjectsProjectSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/onboarding': typeof OnboardingRoute
-  '/(app)/settings': typeof appSettingsRoute
   '/(auth)/forget-password': typeof authForgetPasswordRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/(auth)/verify-email': typeof authVerifyEmailRoute
-  '/(app)/projects/': typeof appProjectsIndexRoute
-  '/(app)/projects/$projectSlug/tasks': typeof appProjectsProjectSlugTasksRoute
-  '/(app)/projects/$projectSlug/': typeof appProjectsProjectSlugIndexRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/projects/': typeof AuthenticatedProjectsIndexRoute
+  '/_authenticated/projects/$projectSlug/tasks': typeof AuthenticatedProjectsProjectSlugTasksRoute
+  '/_authenticated/projects/$projectSlug/': typeof AuthenticatedProjectsProjectSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/onboarding'
-    | '/settings'
     | '/forget-password'
     | '/login'
     | '/register'
     | '/verify-email'
+    | '/settings'
     | '/projects/'
     | '/projects/$projectSlug/tasks'
     | '/projects/$projectSlug/'
@@ -127,39 +134,37 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/onboarding'
-    | '/settings'
     | '/forget-password'
     | '/login'
     | '/register'
     | '/verify-email'
+    | '/settings'
     | '/projects'
     | '/projects/$projectSlug/tasks'
     | '/projects/$projectSlug'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/onboarding'
-    | '/(app)/settings'
     | '/(auth)/forget-password'
     | '/(auth)/login'
     | '/(auth)/register'
     | '/(auth)/verify-email'
-    | '/(app)/projects/'
-    | '/(app)/projects/$projectSlug/tasks'
-    | '/(app)/projects/$projectSlug/'
+    | '/_authenticated/settings'
+    | '/_authenticated/projects/'
+    | '/_authenticated/projects/$projectSlug/tasks'
+    | '/_authenticated/projects/$projectSlug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   OnboardingRoute: typeof OnboardingRoute
-  appSettingsRoute: typeof appSettingsRoute
   authForgetPasswordRoute: typeof authForgetPasswordRoute
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
   authVerifyEmailRoute: typeof authVerifyEmailRoute
-  appProjectsIndexRoute: typeof appProjectsIndexRoute
-  appProjectsProjectSlugTasksRoute: typeof appProjectsProjectSlugTasksRoute
-  appProjectsProjectSlugIndexRoute: typeof appProjectsProjectSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -171,12 +176,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/(auth)/verify-email': {
       id: '/(auth)/verify-email'
@@ -206,48 +225,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authForgetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(app)/settings': {
-      id: '/(app)/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof appSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(app)/projects/': {
-      id: '/(app)/projects/'
+    '/_authenticated/projects/': {
+      id: '/_authenticated/projects/'
       path: '/projects'
       fullPath: '/projects/'
-      preLoaderRoute: typeof appProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedProjectsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/(app)/projects/$projectSlug/': {
-      id: '/(app)/projects/$projectSlug/'
+    '/_authenticated/projects/$projectSlug/': {
+      id: '/_authenticated/projects/$projectSlug/'
       path: '/projects/$projectSlug'
       fullPath: '/projects/$projectSlug/'
-      preLoaderRoute: typeof appProjectsProjectSlugIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedProjectsProjectSlugIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/(app)/projects/$projectSlug/tasks': {
-      id: '/(app)/projects/$projectSlug/tasks'
+    '/_authenticated/projects/$projectSlug/tasks': {
+      id: '/_authenticated/projects/$projectSlug/tasks'
       path: '/projects/$projectSlug/tasks'
       fullPath: '/projects/$projectSlug/tasks'
-      preLoaderRoute: typeof appProjectsProjectSlugTasksRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedProjectsProjectSlugTasksRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedProjectsIndexRoute: typeof AuthenticatedProjectsIndexRoute
+  AuthenticatedProjectsProjectSlugTasksRoute: typeof AuthenticatedProjectsProjectSlugTasksRoute
+  AuthenticatedProjectsProjectSlugIndexRoute: typeof AuthenticatedProjectsProjectSlugIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedProjectsIndexRoute: AuthenticatedProjectsIndexRoute,
+  AuthenticatedProjectsProjectSlugTasksRoute:
+    AuthenticatedProjectsProjectSlugTasksRoute,
+  AuthenticatedProjectsProjectSlugIndexRoute:
+    AuthenticatedProjectsProjectSlugIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   OnboardingRoute: OnboardingRoute,
-  appSettingsRoute: appSettingsRoute,
   authForgetPasswordRoute: authForgetPasswordRoute,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
   authVerifyEmailRoute: authVerifyEmailRoute,
-  appProjectsIndexRoute: appProjectsIndexRoute,
-  appProjectsProjectSlugTasksRoute: appProjectsProjectSlugTasksRoute,
-  appProjectsProjectSlugIndexRoute: appProjectsProjectSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,6 +6,10 @@ export const authClient = createAuthClient({
         lastLoginMethodClient(),
         organizationClient()
     ],
+    sessionOptions: {
+        refetchOnWindowFocus: false,
+        refetchWhenOffline: true,
+    }
 })
 
 export async function signInWithGitHub() {
