@@ -4,6 +4,7 @@ import { Card, CardContent } from '#/components/ui/card'
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSeparator } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { Spinner } from '#/components/ui/spinner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '#/components/ui/tooltip'
 import { authClient } from '#/lib/auth-client'
 import { IconBrandGithub } from '@tabler/icons-react'
 import { useForm } from '@tanstack/react-form'
@@ -29,6 +30,7 @@ const loginSchema = z.object({
 
 function LoginPage() {
   const navigate = Route.useNavigate()
+  const lastLoginMethod = authClient.getLastUsedLoginMethod()
 
   const form = useForm({
     defaultValues: {
@@ -44,7 +46,19 @@ function LoginPage() {
         password: value.password,
         callbackURL: "/projects"
       }, {
-        onError: (ctx) => {
+        onError: async (ctx) => {
+          // We are checking if the user needs to verify their email
+          // If yes we send them another one and redirect them to the verify email page
+          if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
+            await authClient.sendVerificationEmail({
+              email: value.email,
+              callbackURL: "/onboarding"
+            })
+
+            // Redirect to verify email page
+            navigate({ to: "/verify-email", search: { email: value.email, resent: true } })
+          }
+
           toast.error(ctx.error.message, {
             duration: 5000,
           })
@@ -58,7 +72,7 @@ function LoginPage() {
   })
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+    <div className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-4xl">
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden p-0">
@@ -111,7 +125,10 @@ function LoginPage() {
                         field.state.meta.isTouched && !field.state.meta.isValid
                       return (
                         <Field data-invalid={isInvalid}>
-                          <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
+                          <div className='flex items-center '>
+                            <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
+                            <Link to="/forgot-password" className='ml-auto inline-block text-xs underline-offset-4 hover:underline'>Elfelejtettem a jelszavam</Link>
+                          </div>
                           <Input
                             id={field.name}
                             name={field.name}
@@ -150,7 +167,18 @@ function LoginPage() {
                   </FieldSeparator>
 
                   <Field className="flex flex-col gap-4">
-                    <OAuthButton provider={{ id: "github", name: "Folytatás GitHub fiókkal", icon: <IconBrandGithub /> }} />
+                    {lastLoginMethod === "github" ? (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <OAuthButton provider={{ id: "github", name: "Folytatás GitHub fiókkal", icon: <IconBrandGithub /> }} />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          Legutóbb ezzel léptél be
+                        </TooltipContent>
+                      </Tooltip>
+                    ) : (
+                      <OAuthButton provider={{ id: "github", name: "Folytatás GitHub fiókkal", icon: <IconBrandGithub /> }} />
+                    )}
                   </Field>
                   
                   <FieldDescription className="text-center">

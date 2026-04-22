@@ -65,6 +65,6 @@ export const auth = betterAuth({
             })
         },
         autoSignInAfterVerification: true,
-        expiresIn: 30 * 60, // 30 minutes expire time for the verification link
+        expiresIn: 10 * 60, // 10 minutes expire time for the verification link
     },
 });

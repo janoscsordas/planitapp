@@ -7,6 +7,7 @@ import NotFoundRoot from '../components/not-found/not-found-root'
 import type { MyRouterContext } from '#/main'
 
 import '../styles.css'
+import { TooltipProvider } from '#/components/ui/tooltip'
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
@@ -19,19 +20,21 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <TanStackDevtools
-        config={{
-          position: 'bottom-right',
-        }}
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
-      <Toaster position="top-center" richColors />
+      <TooltipProvider>
+        <Outlet />
+        <TanStackDevtools
+          config={{
+            position: 'bottom-right',
+          }}
+          plugins={[
+            {
+              name: 'TanStack Router',
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
+        <Toaster position="top-center" richColors />
+      </TooltipProvider>
     </QueryClientProvider>
   )
 }

@@ -57,14 +57,17 @@ function RegisterPage() {
           form.resetField('passwordConfirm')
         },
         onSuccess: () => {
-          navigate({ to: '/verify-email' })
+          // We are now giving the email address to the verify-email page
+          // We need the email to show the email on the page as well so the user knows
+          // if they signed up with the correct email
+          navigate({ to: '/verify-email?email=' + encodeURIComponent(form.state.values.email) + '&resent=false' })
         }
       })
     },
   })
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
+    <div className="flex min-h-svh flex-col items-center justify-center bg-background p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-4xl">
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden p-0">
