@@ -9,15 +9,15 @@ export default function NotFoundRoot() {
     <div className="w-full min-h-screen flex justify-center items-center">
       <Empty>
         <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <IconCompass />
+          <EmptyMedia variant="icon" className="size-16">
+            <IconCompass className="size-8" />
           </EmptyMedia>
-          <EmptyTitle>Eltévedtél?</EmptyTitle>
-          <EmptyDescription>Úgy tűnik, nem találod amit keresel.</EmptyDescription>
+          <EmptyTitle className="text-3xl font-bold">Eltévedtél?</EmptyTitle>
+          <EmptyDescription className="text-xl">Úgy tűnik, nem találod amit keresel.</EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
           <Link to="/">
-            <Button className="cursor-pointer">Vissza a kezdőlapra</Button>
+            <Button className="cursor-pointer" size="lg">Vissza a kezdőlapra</Button>
           </Link>
         </EmptyContent>
       </Empty>

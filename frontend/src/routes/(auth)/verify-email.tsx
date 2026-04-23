@@ -14,8 +14,8 @@ export const Route = createFileRoute('/(auth)/verify-email')({
       resent: search.resent as boolean || false,
     }
   },
-  beforeLoad: ({ context }) => {
-    if (context.auth) {
+  beforeLoad: ({ context, search }) => {
+    if (context.auth || !search.email) {
       throw redirect({
         to: '/',
       })
@@ -38,7 +38,7 @@ function RouteComponent() {
   useEffect(() => {
     const updateTimer = () => {
       const expiry = localStorage.getItem(STORAGE_KEY)
-      if (!expiry) {
+      if (!expiry || expiry === String(Date.now() + TIMER_DURATION_MS)) {
         const newExpiry = Date.now() + TIMER_DURATION_MS
         localStorage.setItem(STORAGE_KEY, newExpiry.toString())
         setTimeLeft(TIMER_DURATION_MS / 1000)

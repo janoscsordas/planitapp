@@ -108,7 +108,7 @@ function LoginPage() {
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
                             type="email"
-                            placeholder="m@example.com"
+                            placeholder="m@példa.hu"
                             autoComplete="off"
                           />
                           {isInvalid && (
@@ -169,9 +169,9 @@ function LoginPage() {
                   <Field className="flex flex-col gap-4">
                     {lastLoginMethod === "github" ? (
                       <Tooltip>
-                        <TooltipTrigger>
+                        <TooltipTrigger render={
                           <OAuthButton provider={{ id: "github", name: "Folytatás GitHub fiókkal", icon: <IconBrandGithub /> }} />
-                        </TooltipTrigger>
+                        } />
                         <TooltipContent>
                           Legutóbb ezzel léptél be
                         </TooltipContent>

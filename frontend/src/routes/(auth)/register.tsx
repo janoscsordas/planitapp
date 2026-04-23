@@ -103,7 +103,7 @@ function RegisterPage() {
                             onChange={(e) => field.handleChange(e.target.value)}
                             aria-invalid={isInvalid}
                             type="email"
-                            placeholder="m@example.com"
+                            placeholder="m@példa.hu"
                             autoComplete="off"
                           />
                           {isInvalid && (
