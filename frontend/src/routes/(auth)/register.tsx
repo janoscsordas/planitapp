@@ -106,7 +106,7 @@ function RegisterPage() {
                             placeholder="m@példa.hu"
                             autoComplete="off"
                           />
-                          {isInvalid && (
+                          {field.state.meta.isTouched && !field.state.meta.isValid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
                         </Field>
@@ -132,7 +132,7 @@ function RegisterPage() {
                             placeholder="**********"
                             autoComplete="off"
                           />
-                          {isInvalid && (
+                          {field.state.meta.isTouched && !field.state.meta.isValid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
                         </Field>
@@ -157,7 +157,7 @@ function RegisterPage() {
                             placeholder="**********"
                             aria-invalid={isInvalid}
                           />
-                          {isInvalid && (
+                          {field.state.meta.isTouched && !field.state.meta.isValid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
                         </Field>

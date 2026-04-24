@@ -7,6 +7,7 @@ import { IconArrowLeft, IconMail } from '@tabler/icons-react'
 import { useForm } from '@tanstack/react-form'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import z from 'zod'
 
 export const Route = createFileRoute('/(auth)/forgot-password')({
@@ -36,15 +37,39 @@ function RouteComponent() {
       onSubmit: forgotPasswordSchema,
     },
     onSubmit: async ({ value }) => {
-
-      // TODO: Implement functionality, so the user can reset their password.
-
-      const {  } = await authClient.requestPasswordReset({
+      await authClient.requestPasswordReset({
         email: value.email,
         redirectTo: "/reset-password"
+      }, {
+        onError: (ctx) => {
+          toast.error(ctx.error.message)
+        },
+        onSuccess: () => {
+          toast.success('Új jelszó kérelem sikeresen elküldve')
+          setSubmittedEmail(value.email)
+          setIsSubmitted(true)
+        }
       })
     },
   })
+
+  const handleResendEmail = async () => {
+    if (!submittedEmail) return;
+    
+    await authClient.requestPasswordReset({
+      email: submittedEmail,
+      redirectTo: "/reset-password"
+    }, {
+      onSuccess: () => {
+        toast.success('Új jelszó kérelem sikeresen elküldve')
+        setSubmittedEmail(submittedEmail)
+        setIsSubmitted(true)
+      },
+      onError: (ctx) => {
+        toast.error(ctx.error.message)
+      }
+    })
+  }
 
   return (
     <main className="min-h-svh flex items-center justify-center bg-background px-4">
@@ -64,7 +89,7 @@ function RouteComponent() {
                 Elfelejtetted a jelszavad?
               </h1>
               <p className="text-muted-foreground text-sm">
-                Nem gond, küldünk az email címedre egy linket a jelszavad visszaállításához.
+                Nem gond. Küldünk az email címedre egy linket a jelszavad visszaállításához.
               </p>
             </div>
 
@@ -94,7 +119,7 @@ function RouteComponent() {
                         placeholder="m@példa.hu"
                         autoComplete="off"
                       />
-                      {isInvalid && (
+                      {field.state.meta.isTouched && !field.state.meta.isValid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
                     </Field>
@@ -157,10 +182,8 @@ function RouteComponent() {
               Nem kaptad meg az email-t?{" "}
               <Button
                 variant="link"
-                onClick={() => {
-                  setIsSubmitted(false)
-                }}
-                className="text-foreground hover:underline underline-offset-4 font-medium"
+                onClick={handleResendEmail}
+                className="text-foreground hover:underline underline-offset-4 font-medium cursor-pointer"
               >
                 Email Újraküldése
               </Button>

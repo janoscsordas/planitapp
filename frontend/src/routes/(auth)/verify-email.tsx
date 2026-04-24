@@ -81,25 +81,25 @@ function RouteComponent() {
 
     setIsResending(true)
     
-    const { error } = await authClient.sendVerificationEmail({
+    await authClient.sendVerificationEmail({
       email,
       callbackURL: '/onboarding',
+    }, {
+      onError: (ctx) => {
+        toast.error(ctx.error.message)
+        setIsResending(false)
+      },
+      onSuccess: () => {
+        // If successful, update the expiry time
+        const newExpiry = Date.now() + TIMER_DURATION_MS
+        localStorage.setItem(STORAGE_KEY, newExpiry.toString())
+        
+        setTimeLeft(TIMER_DURATION_MS / 1000)
+        setResendCount((prev) => prev + 1)
+        setIsResending(false)
+        toast.success("Email elküldve!")
+      }
     })
-
-    if (error) {
-      toast.error("Hiba történt az újraküldés során.")
-      setIsResending(false)
-      return
-    }
-
-    // If successful, update the expiry time
-    const newExpiry = Date.now() + TIMER_DURATION_MS
-    localStorage.setItem(STORAGE_KEY, newExpiry.toString())
-    
-    setTimeLeft(TIMER_DURATION_MS / 1000)
-    setResendCount((prev) => prev + 1)
-    setIsResending(false)
-    toast.success("Email elküldve!")
   }, [email])
 
   return (

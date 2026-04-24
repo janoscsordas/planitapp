@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { lastLoginMethod, organization } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../database/db";
-import { sendVerificationEmail } from "./send-email";
+import { sendForgotPasswordEmail, sendSuccessfulResetEmail, sendVerificationEmail } from "./send-email";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import {
   isDisposableEmail,
@@ -30,11 +30,18 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
-        sendResetPassword: async ({ user, url, token }) => {
-            // TODO: Send reset password email
+        sendResetPassword: async ({ user, url }) => {
+            void sendForgotPasswordEmail({
+                to: user.email,
+                name: user.name || "",
+                resetLink: url,
+            })
         },
-        onPasswordReset: async ({ user }, request) => {
-            // TODO: Send password reset confirmation email
+        onPasswordReset: async ({ user }) => {
+            void sendSuccessfulResetEmail({
+                to: user.email,
+                name: user.name || "",
+            })
         },
         revokeSessionsOnPasswordReset: true,
     },

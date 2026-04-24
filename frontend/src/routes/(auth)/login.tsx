@@ -111,7 +111,7 @@ function LoginPage() {
                             placeholder="m@példa.hu"
                             autoComplete="off"
                           />
-                          {isInvalid && (
+                          {field.state.meta.isTouched && !field.state.meta.isValid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
                         </Field>
@@ -140,7 +140,7 @@ function LoginPage() {
                             placeholder="**********"
                             autoComplete="off"
                           />
-                          {isInvalid && (
+                          {field.state.meta.isTouched && !field.state.meta.isValid && (
                             <FieldError errors={field.state.meta.errors} />
                           )}
                         </Field>
