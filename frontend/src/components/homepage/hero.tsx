@@ -105,7 +105,7 @@ function TaskCard({
     "progressColor" in task ? (task.progressColor as string) : ""
 
   return (
-    <div className="group bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.07] hover:border-white/[0.12] rounded-xl p-3 transition-all duration-200 hover:-translate-y-px cursor-pointer">
+    <div className="group bg-white/4 hover:bg-white/[0.07] border border-white/[0.07] hover:border-white/12 rounded-xl p-3 transition-all duration-200 hover:-translate-y-px cursor-pointer">
       <p className="text-[12.5px] text-zinc-300 leading-snug font-normal">
         {task.title}
       </p>
@@ -125,7 +125,7 @@ function TaskCard({
       </div>
       {progress !== null && (
         <div className="mt-2.5">
-          <div className="h-[3px] bg-white/[0.06] rounded-full overflow-hidden">
+          <div className="h-0.75 bg-white/6 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all ease-out ${progressColor}`}
               style={{
@@ -185,22 +185,24 @@ export function Hero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              size="lg"
-              className="group h-12 gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90"
-            >
-              <Link to="/register" className="flex items-center gap-2">
-                Kezd el ingyen
+            <Link to="/register">
+              <Button
+                size="lg"
+                className="group h-12 gap-2 bg-primary px-8 text-primary-foreground hover:bg-primary/90"
+              >
+                Kezdd el ingyen
                 <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="h-12 border-border px-8 text-foreground hover:bg-secondary"
-            >
-              <a href="#funkciok">Tudj meg többet</a>
-            </Button>
+              </Button>
+            </Link>
+            <a href="#funkciok">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-12 border-border px-8 text-foreground hover:bg-secondary"
+              >
+                Tudj meg többet
+              </Button>
+            </a>
           </div>
 
           {/* Social proof */}
@@ -224,9 +226,9 @@ export function Hero() {
 
         {/* Dashboard preview mockup */}
         <div className="relative mx-auto mt-20 max-w-5xl">
-          <div className="bg-[#0d1117] border border-white/[0.08] rounded-2xl overflow-hidden shadow-2xl shadow-black/60">
+          <div className="bg-[#0d1117] border border-white/8 rounded-2xl overflow-hidden shadow-2xl shadow-black/60">
             {/* Title bar */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-white/[0.03] border-b border-white/[0.06]">
+            <div className="flex items-center gap-3 px-4 py-3 bg-white/3 border-b border-white/6">
               {/* Traffic lights */}
               <div className="flex gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-900/80" />
@@ -234,8 +236,8 @@ export function Hero() {
                 <div className="w-3 h-3 rounded-full bg-green-900/80" />
               </div>
               {/* URL bar */}
-              <div className="flex-1 bg-white/[0.05] rounded-md py-1 px-3 text-[11px] text-zinc-600 text-center tracking-wide select-none">
-                app.planitapp.hu/projektek
+              <div className="flex-1 bg-white/5 rounded-md py-1 px-3 text-[11px] text-zinc-600 text-center tracking-wide select-none">
+                planitapp.hu/projektek/q2-sprint-backend
               </div>
               {/* Spacer to balance traffic lights */}
               <div className="w-14" />
@@ -286,7 +288,7 @@ export function Hero() {
                       </div>
                     ))}
                   </div>
-                  <button className="text-[11px] text-zinc-500 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] px-3 py-1 rounded-lg transition-colors">
+                  <button className="text-[11px] text-zinc-500 bg-white/4 hover:bg-white/[0.07] border border-white/6 px-3 py-1 rounded-lg transition-colors">
                     + Feladat
                   </button>
                 </div>
@@ -304,13 +306,13 @@ export function Hero() {
                       <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-widest">
                         {col.label}
                       </span>
-                      <span className="ml-auto text-[10px] text-zinc-700 bg-white/[0.04] rounded-full px-1.5 py-px">
+                      <span className="ml-auto text-[10px] text-zinc-700 bg-white/4 rounded-full px-1.5 py-px">
                         {col.tasks.length}
                       </span>
                     </div>
 
                     {/* Column background */}
-                    <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-2 flex flex-col gap-2 min-h-[160px]">
+                    <div className="bg-white/2 border border-white/5 rounded-xl p-2 flex flex-col gap-2 min-h-40">
                       {col.tasks.map((task) => (
                         <TaskCard key={task.id} task={task} animate={animate} />
                       ))}
