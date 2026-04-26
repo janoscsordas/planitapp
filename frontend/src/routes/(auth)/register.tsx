@@ -168,7 +168,7 @@ function RegisterPage() {
                     selector={(state) => [state.canSubmit, state.isSubmitting]}
                     children={([, isSubmitting]) => (
                       <Field orientation="horizontal">
-                        <Button className="w-full cursor-pointer" type="submit" form="register-form" disabled={isSubmitting}>
+                        <Button className="w-full" type="submit" form="register-form" disabled={isSubmitting}>
                           {isSubmitting ? <Spinner /> : 'Regisztráció'}
                         </Button>
                       </Field>

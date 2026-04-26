@@ -27,7 +27,7 @@ export default function OAuthButton({ provider }: { provider: Provider }) {
     }
     
     return (
-        <Button variant="outline" onClick={handleOAuthLogin} disabled={isPending} className="w-full cursor-pointer">
+        <Button variant="outline" onClick={handleOAuthLogin} disabled={isPending} className="w-full">
             {isPending ? 
                 <Spinner /> 
                 : 

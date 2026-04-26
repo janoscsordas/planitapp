@@ -1,4 +1,3 @@
-import LogOutButton from '#/components/auth/logout-button'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated/projects/')({
@@ -6,5 +5,9 @@ export const Route = createFileRoute('/_authenticated/projects/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/_dashboard/projects/"! <Link to="/">Hazafele</Link> <LogOutButton /></div>
+  return (
+    <div className="min-h-svh bg-background">
+      
+    </div>
+  )
 }

@@ -152,7 +152,7 @@ function LoginPage() {
                     children={([, isSubmitting]) => (
                       <Field orientation="horizontal">
                         <Button 
-                          className="w-full cursor-pointer" 
+                          className="w-full" 
                           type="submit" 
                           form="login-form" 
                           disabled={isSubmitting}
