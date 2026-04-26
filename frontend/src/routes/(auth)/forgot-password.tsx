@@ -99,6 +99,7 @@ function RouteComponent() {
                 form.handleSubmit()
               }}
               className="space-y-4"
+              id="forgot-password-form"
             >
               <form.Field
                 name="email"
@@ -133,7 +134,7 @@ function RouteComponent() {
                     <Button 
                       className="w-full cursor-pointer" 
                       type="submit" 
-                      form="login-form" 
+                      form="forgot-password-form"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? <Spinner /> : 'Jelszó visszaállítása'}
