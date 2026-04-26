@@ -147,13 +147,13 @@ const SuccessfulResetEmail = function SuccessfulResetEmail({
 
             {/* Heading */}
             <Heading style={styles.heading}>
-              Jelszava sikeresen megváltozott!
+              Jelszavad sikeresen megváltozott!
             </Heading>
 
             {/* Body */}
             <Text style={styles.body}>
-              Fiókja jelszava sikeresen frissítve lett. Ha Ön hajtotta végre ezt
-              a változtatást, nincs teendője.
+              Fiókod jelszava sikeresen frissítve lett. Ha te hajtottad végre
+              ezt a változtatást, nincs további teendőd.
             </Text>
 
             {/* CTA */}
@@ -164,7 +164,7 @@ const SuccessfulResetEmail = function SuccessfulResetEmail({
             {/* Warning box */}
             <Section style={{ ...styles.warningBox, marginTop: "28px" }}>
               <Text style={styles.warningText}>
-                Ha nem Ön változtatta meg a jelszavát, azonnal vegye fel velünk
+                Ha nem te változtattad meg a jelszavad, azonnal vedd fel velünk
                 a kapcsolatot:{" "}
                 <Link
                   href="mailto:support@planitapp.hu"
@@ -187,7 +187,7 @@ const SuccessfulResetEmail = function SuccessfulResetEmail({
                 marginBottom: "28px",
               }}
             >
-              Kérdése van? Írjon nekünk:{" "}
+              Kérdésed van? Írj nekünk:{" "}
               <Link
                 href="mailto:support@planitapp.hu"
                 style={{

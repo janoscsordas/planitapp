@@ -176,7 +176,7 @@ const ForgotPasswordEmail = function ForgotPasswordEmail({
 
             {/* Body */}
             <Text style={styles.body}>
-              Jelszó-visszaállítási kérelmet kaptunk a fiókjához. Kattintson az
+              Jelszó-visszaállítási kérelmet kaptunk a fiókodhoz. Kattints az
               alábbi gombra az új jelszó beállításához. A link{" "}
               <strong style={{ color: "#111111" }}>30 percig érvényes.</strong>
             </Text>
@@ -192,7 +192,7 @@ const ForgotPasswordEmail = function ForgotPasswordEmail({
             {/* Fallback */}
             <Section style={styles.fallbackBox}>
               <Text style={styles.fallbackLabel}>
-                Ha a gomb nem működik, használja ezt a linket:
+                Ha a gomb nem működik, használd ezt a linket:
               </Text>
               <Text style={styles.fallbackLink}>
                 <Link
@@ -207,14 +207,14 @@ const ForgotPasswordEmail = function ForgotPasswordEmail({
             {/* Warning box */}
             <Section style={{ ...styles.warningBox, marginTop: "28px" }}>
               <Text style={styles.warningText}>
-                Ha nem Ön kérte a jelszó visszaállítását, hagyja figyelmen kívül
-                ezt az e-mailt, fiókja biztonságos marad!
+                Ha nem te kérted a jelszó visszaállítását, hagyd figyelmen kívül
+                ezt az e-mailt, fiókod biztonságos marad!
               </Text>
             </Section>
 
             {/* Support */}
             <Text style={styles.smallText}>
-              Kérdése van? Írjon nekünk:{" "}
+              Kérdésed van? Írj nekünk:{" "}
               <Link
                 href="mailto:support@planitapp.hu"
                 style={{

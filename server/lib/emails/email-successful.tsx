@@ -48,18 +48,21 @@ const styles = {
   eyebrowPill: {
     display: "inline-flex",
     alignItems: "center",
-    gap: "7px",
-    backgroundColor: "#e6f8ef",
-    borderRadius: "20px",
-    padding: "6px 14px",
+    gap: "8px",
+    backgroundColor: "#eafaf1",
+    borderRadius: "30px",
+    padding: "8px 18px",
     marginBottom: "18px",
+    verticalAlign: "middle",
   },
   eyebrowText: {
-    fontSize: "11px",
-    fontWeight: "600",
-    letterSpacing: "0.08em",
+    fontSize: "12px",
+    fontWeight: "700",
+    letterSpacing: "0.05em",
     textTransform: "uppercase" as const,
     color: "#1d8a50",
+    lineHeight: "1",
+    marginTop: "1px",
   },
   heading: {
     fontSize: "26px",
@@ -163,7 +166,7 @@ const VerificationEmail = function VerificationEmail({
 
             {/* Eyebrow pill */}
             <Section style={styles.eyebrowPill}>
-              {/* <IconCircleCheck size={16} /> */}
+              {/* <IconCircleCheck size={17} color="#1d8a50" /> */}
               <span style={styles.eyebrowText}>Sikeres regisztráció</span>
             </Section>
 
@@ -176,9 +179,9 @@ const VerificationEmail = function VerificationEmail({
 
             {/* Body */}
             <Text style={styles.body}>
-              Köszönjük, hogy regisztrált a planitapp.hu-n! Kérjük, erősítse meg
-              e-mail címét az alábbi gombra kattintva, hogy teljes hozzáférést
-              kapjon fiókjához.
+              Köszönjük, hogy regisztáltál a planitapp.hu-n! Kérjük, erősítsd
+              meg az e-mail címedet az alábbi gombra kattintva, hogy teljes
+              hozzáférést kapj a fiókodhoz.
             </Text>
 
             {/* CTA */}
@@ -192,7 +195,7 @@ const VerificationEmail = function VerificationEmail({
             {/* Fallback */}
             <Section style={styles.fallbackBox}>
               <Text style={styles.fallbackLabel}>
-                Ha a gomb nem működik, használja ezt a linket:
+                Ha a gomb nem működik, használd ezt a linket:
               </Text>
               <Text style={styles.fallbackLink}>
                 <Link
@@ -206,13 +209,13 @@ const VerificationEmail = function VerificationEmail({
 
             <Section style={{ ...styles.warningBox, marginTop: "28px" }}>
               <Text style={styles.warningText}>
-                Ha nem Ön regisztrált, hagyja figyelmen kívül ezt az e-mailt.
+                Ha nem te regisztráltál, hagyjd figyelmen kívül ezt az e-mailt.
               </Text>
             </Section>
 
             {/* Support + ignore */}
             <Text style={styles.smallText}>
-              Kérdése van? Írjon nekünk:{" "}
+              Kérdésed van? Írj nekünk:{" "}
               <Link
                 href="mailto:support@planitapp.hu"
                 style={{
