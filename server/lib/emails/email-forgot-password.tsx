@@ -178,7 +178,7 @@ const ForgotPasswordEmail = function ForgotPasswordEmail({
             <Text style={styles.body}>
               Jelszó-visszaállítási kérelmet kaptunk a fiókodhoz. Kattints az
               alábbi gombra az új jelszó beállításához. A link{" "}
-              <strong style={{ color: "#111111" }}>30 percig érvényes.</strong>
+              <strong style={{ color: "#111111" }}>10 percig érvényes.</strong>
             </Text>
 
             {/* CTA */}

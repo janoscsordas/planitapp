@@ -27,6 +27,7 @@
     "noPropertyAccessFromIndexSignature": false,
 
     // Path aliases
+    "baseUrl": "./",
     "paths": {
       "@types/*": ["types/*"],
     },

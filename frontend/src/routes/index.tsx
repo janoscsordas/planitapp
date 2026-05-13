@@ -122,7 +122,7 @@ function FeatureCard({
         <Icon size={18} className="text-green-400" />
       </div>
       <h3 className="text-base font-semibold text-zinc-100 mb-2">{title}</h3>
-      <p className="text-sm text-zinc-500 leading-relaxed">{desc}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
     </div>
   );
 }

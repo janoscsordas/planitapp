@@ -56,6 +56,12 @@ export const auth = betterAuth({
     rateLimit: {
         enabled: true,
     },
+    session: {
+        cookieCache: {
+            enabled: true,
+            maxAge: 5 * 60 // 5 minutes
+        }
+    },
     plugins: [
         lastLoginMethod({
             maxAge: 60 * 60 * 24 * 30 // Storing for 30 days in the cookies
