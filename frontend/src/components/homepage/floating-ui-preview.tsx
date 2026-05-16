@@ -22,7 +22,7 @@ export function ChatPanel() {
       user: "andris",
       avatar: "J",
       color: "bg-sky-500",
-      text: "Jól néz ki! Hagy push-oljam fel a frissítést.",
+      text: "Jól néz ki! Hadd pusholjam fel a frissítést.",
       time: "1m",
     },
     {

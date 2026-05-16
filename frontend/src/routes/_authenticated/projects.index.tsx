@@ -7,6 +7,7 @@ export const Route = createFileRoute('/_authenticated/projects/')({
 function RouteComponent() {
   return (
     <div className="min-h-svh bg-background">
+      
     </div>
   )
 }

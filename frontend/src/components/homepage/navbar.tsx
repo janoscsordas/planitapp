@@ -1,13 +1,9 @@
-import { authClient } from "#/lib/auth-client";
 import { IconBolt } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import UserAvatar from "../user/user-avatar";
-import { Button } from "../ui/button";
 
 /* ─── Nav ─── */
 export default function Navbar() {
-  const { data } = authClient.useSession();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -47,34 +43,18 @@ export default function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          {data ? (
-            <>
-              <Link
-                to="/projects"
-                className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors hidden sm:block"
-              >
-                <Button variant="outline" size="sm" className="cursor-pointer">
-                  Projektek
-                </Button>
-              </Link>
-              <UserAvatar user={data.user} />
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors hidden sm:block"
-              >
-                Bejelentkezés
-              </Link>
-              <Link
-                to="/register"
-                className="text-sm font-semibold px-4 py-2 rounded-lg bg-green-500 text-zinc-950 hover:bg-green-400 transition-colors"
-              >
-                Kezdj bele!
-              </Link>
-            </>
-          )}
+          <Link
+            to="/login"
+            className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors hidden sm:block"
+          >
+            Bejelentkezés
+          </Link>
+          <Link
+            to="/register"
+            className="text-sm font-semibold px-4 py-2 rounded-lg bg-green-500 text-zinc-950 hover:bg-green-400 transition-colors"
+          >
+            Kezdj bele!
+          </Link>
         </div>
       </div>
     </nav>

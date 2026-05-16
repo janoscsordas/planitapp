@@ -9,7 +9,6 @@ import {
   IconMessage2,
   IconLayoutKanban,
   IconChevronRight,
-  IconStar,
   IconSparkles,
   IconShield,
   IconBell,
@@ -22,146 +21,12 @@ import Navbar from "#/components/homepage/navbar";
 import FloatingUIPreview, {
   ChatPanel,
 } from "#/components/homepage/floating-ui-preview";
+import Testimonial from "#/components/homepage/testimonial";
+import BugPanel from "#/components/homepage/bug-panel";
+import FeatureCard from "#/components/homepage/feature-card";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/")({ component: HomePage });
 
-function App() {
-  return <HomePage />;
-}
-
-/* ─── Bug report mock ─── */
-function BugPanel() {
-  type BugStatus = "open" | "in progress" | "resolved";
-  type BugSeverity = "high" | "critical" | "low";
-
-  const bugs = [
-    {
-      id: "#041",
-      title: "Modal z-index overlap on mobile",
-      severity: "high" as BugSeverity,
-      status: "open" as BugStatus,
-    },
-    {
-      id: "#042",
-      title: "Auth token not refreshing silently",
-      severity: "critical" as BugSeverity,
-      status: "in progress" as BugStatus,
-    },
-    {
-      id: "#043",
-      title: "Dark mode flicker on load",
-      severity: "low" as BugSeverity,
-      status: "resolved" as BugStatus,
-    },
-  ];
-  const sev = {
-    high: "text-orange-400 bg-orange-400/10",
-    critical: "text-red-400 bg-red-400/10",
-    low: "text-zinc-400 bg-zinc-400/10",
-  };
-  const stat = {
-    open: "text-yellow-400",
-    "in progress": "text-sky-400",
-    resolved: "text-green-400",
-  };
-  return (
-    <div className="rounded-xl border border-zinc-800/60 bg-zinc-950/70 backdrop-blur-sm overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800/60">
-        <IconBug size={14} className="text-red-400" />
-        <span className="text-sm font-medium text-zinc-300">Bug Tracker</span>
-        <span className="ml-auto text-xs rounded-full px-2 py-0.5 bg-red-500/10 text-red-400">
-          2 open
-        </span>
-      </div>
-      <div className="divide-y divide-zinc-800/40">
-        {bugs.map((b, i) => (
-          <div key={i} className="flex items-center gap-3 px-4 py-3">
-            <span className="text-[10px] text-zinc-600 font-mono w-10">
-              {b.id}
-            </span>
-            <span className="text-xs text-zinc-300 flex-1 truncate">
-              {b.title}
-            </span>
-            <span
-              className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${sev[b.severity]}`}
-            >
-              {b.severity}
-            </span>
-            <span className={`text-[10px] ${stat[b.status]}`}>{b.status}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─── Feature card ─── */
-function FeatureCard({
-  icon: Icon,
-  title,
-  desc,
-  accent = "from-green-900/30 to-transparent",
-}: {
-  icon: any;
-  title: string;
-  desc: string;
-  accent?: string;
-}) {
-  return (
-    <div
-      className={`relative rounded-2xl border border-zinc-800/60 bg-linear-to-b ${accent} p-6 hover:border-green-800/60 transition-all duration-300 group overflow-hidden`}
-    >
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 0%, rgba(34,197,94,0.06), transparent 60%)",
-        }}
-      />
-      <div className="w-10 h-10 rounded-xl bg-green-950/80 border border-green-900/50 flex items-center justify-center mb-4 group-hover:border-green-700/60 transition-colors">
-        <Icon size={18} className="text-green-400" />
-      </div>
-      <h3 className="text-base font-semibold text-zinc-100 mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-    </div>
-  );
-}
-
-/* ─── Testimonial ─── */
-function Testimonial({
-  quote,
-  name,
-  role,
-  company,
-}: {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-}) {
-  return (
-    <div className="rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 flex flex-col gap-4">
-      <div className="flex gap-0.5">
-        {[...Array(5)].map((_, i) => (
-          <IconStar
-            key={i}
-            size={13}
-            className="text-green-500 fill-green-500"
-          />
-        ))}
-      </div>
-      <p className="text-sm text-zinc-400 leading-relaxed italic">"{quote}"</p>
-      <div>
-        <p className="text-sm font-semibold text-zinc-200">{name}</p>
-        <p className="text-xs text-zinc-500">
-          {role} · {company}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Main App ─── */
 function HomePage() {
   return (
     <div
@@ -275,7 +140,7 @@ function HomePage() {
             <FeatureCard
               icon={IconBug}
               title="Probléma Jelentés"
-              desc="Probléma kezelés fontossági."
+              desc="Probléma kezelés fontosság szerint. Kapjanak figyelmet a először a kritikusabb problémák a projektedben."
               accent="from-red-900/20 to-transparent"
             />
             <FeatureCard
