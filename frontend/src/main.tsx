@@ -35,7 +35,7 @@ function App() {
     <RouterProvider 
       router={router} 
       context={{ 
-        auth: session
+        auth: session ?? null
       }} 
     />
   )

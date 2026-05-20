@@ -29,10 +29,7 @@ export const Route = createFileRoute("/")({ component: HomePage });
 
 function HomePage() {
   return (
-    <div
-      className="min-h-screen text-zinc-100"
-      style={{ fontFamily: "'DM Sans', 'Inter', sans-serif" }}
-    >
+    <div className="min-h-screen">
       <MeshBackground />
       <Navbar />
 
@@ -63,12 +60,12 @@ function HomePage() {
         </p>
 
         <div className="animate-slide-up delay-300 flex flex-col sm:flex-row items-center gap-3 mb-10">
-          <Link to="/register">
+          <Link to="/register" search={{ redirect: "/projects" }}>
             <button className="cursor-pointer flex items-center gap-2 px-6 py-3 rounded-xl bg-green-500 text-zinc-950 font-semibold text-sm hover:bg-green-400 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-green-500/20">
               Kezdj bele <IconArrowRight size={16} />
             </button>
           </Link>
-          <button className="flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-700/60 text-zinc-300 text-sm hover:border-zinc-600 hover:text-zinc-100 transition-all">
+          <button className="flex items-center gap-2 px-6 py-3 rounded-xl border border-zinc-700/60 text-zinc-300 text-sm hover:border-zinc-600 hover transition-all">
             <IconPlayerPlay size={14} className="text-green-400" /> Demo
             megtekintése
           </button>
@@ -97,7 +94,7 @@ function HomePage() {
               >
                 <Counter end={s.end} suffix={s.suffix} />
               </div>
-              <p className="text-sm text-zinc-500">{s.label}</p>
+              <p className="text-sm text-muted-foreground">{s.label}</p>
             </div>
           ))}
         </div>
@@ -110,10 +107,10 @@ function HomePage() {
             <span className="text-xs font-semibold uppercase tracking-widest text-green-500 mb-3 block">
               Minden, amire szükséged van
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Olyan csapatoknak készült, akik gyorsan haladnak
             </h2>
-            <p className="text-zinc-500 text-base max-w-xl mx-auto">
+            <p className="text-muted-foreground text-base max-w-xl mx-auto">
               Minden elérhető funkció, úgy készült, hogy a csapat tagjai
               könnyedén tudjanak dolgozni.
             </p>
@@ -166,10 +163,10 @@ function HomePage() {
             <span className="text-xs font-semibold uppercase tracking-widest text-green-500 mb-3 block">
               Probléma Kezelés
             </span>
-            <h2 className="text-3xl font-bold text-zinc-100 mb-4 leading-tight">
+            <h2 className="text-3xl font-bold mb-4 leading-tight">
               A jelentéstől a javításig, rekord idő alatt
             </h2>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Hibák rögzítése közvetlenül a projektedből. Rendelj hozzá
               súlyossági szintet, kapcsold feladatokhoz és kövesd a megoldást —
               mindezt anélkül, hogy elhagynád a Planitappot.
@@ -182,7 +179,7 @@ function HomePage() {
               ].map((t, i) => (
                 <li
                   key={i}
-                  className="flex items-center gap-2.5 text-sm text-zinc-400"
+                  className="flex items-center gap-2.5 text-sm text-muted-foreground"
                 >
                   <IconCheck size={14} className="text-green-500 shrink-0" />
                   {t}
@@ -209,10 +206,10 @@ function HomePage() {
             <span className="text-xs font-semibold uppercase tracking-widest text-green-500 mb-3 block">
               Csapat Chat
             </span>
-            <h2 className="text-3xl font-bold text-zinc-100 mb-4 leading-tight">
+            <h2 className="text-3xl font-bold mb-4 leading-tight">
               A kontextus ott él, ahol a munka zajlik.
             </h2>
-            <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               Készíts csatornákat a különböző tematikájú feladatok elvégzéséhez.
               Említsd meg a tagokat, ossz meg fájlokat - megszakítás nélkül.
               Lapváltás nélkül.
@@ -232,14 +229,14 @@ function HomePage() {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-zinc-100 mb-3">
+            <h2 className="text-3xl font-bold mb-3">
               A csapatok imádják a{" "}
               <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-green-300 via-green-400 to-green-500">
                 Planit
               </span>
               appot
             </h2>
-            <p className="text-zinc-500 text-sm">
+            <p className="text-muted-foreground text-sm">
               Gyorsan haladó fejlesztői csapatok eszköze.
             </p>
           </div>
@@ -270,10 +267,10 @@ function HomePage() {
       <section className="py-24 px-6" id="pricing">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-zinc-100 mb-3">
+            <h2 className="text-3xl font-bold mb-3">
               Egyszerű, átlátható árazás
             </h2>
-            <p className="text-zinc-500 text-sm">
+            <p className="text-muted-foreground text-sm">
               Kezdj ingyen. Amikor készen állsz, ugorj a következő szintre.
             </p>
           </div>
@@ -312,11 +309,11 @@ function HomePage() {
             ].map((plan, i) => (
               <div
                 key={i}
-                className={`relative rounded-2xl border p-6 flex flex-col ${plan.highlight ? "border-green-600/60 bg-green-950/20 shadow-xl shadow-green-900/20" : "border-zinc-800/60 bg-zinc-950/40"}`}
+                className={`relative rounded-2xl border p-6 flex flex-col ${plan.highlight ? "border-primary/60 bg-primary/10 shadow-xl shadow-primary/20" : "border-border/90 bg-background/30"}`}
               >
                 {plan.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-green-500 text-zinc-950">
+                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-primary text-primary-foreground">
                       Legnépszerűbb
                     </span>
                   </div>
@@ -325,20 +322,20 @@ function HomePage() {
                   <p className="text-sm font-semibold text-zinc-400 mb-1">
                     {plan.name}
                   </p>
-                  <p className="text-3xl font-bold text-zinc-100">
+                  <p className="text-3xl font-bold">
                     {plan.price}
                   </p>
-                  <p className="text-xs text-zinc-500 mt-1">{plan.sub}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{plan.sub}</p>
                 </div>
                 <ul className="space-y-2.5 mb-8 flex-1">
                   {plan.features.map((f, j) => (
                     <li
                       key={j}
-                      className="flex items-center gap-2 text-sm text-zinc-400"
+                      className="flex items-center gap-2 text-sm text-muted-foreground"
                     >
                       <IconCheck
                         size={13}
-                        className="text-green-500 shrink-0"
+                        className="text-primary shrink-0"
                       />
                       {f}
                     </li>
@@ -346,7 +343,7 @@ function HomePage() {
                 </ul>
                 <Link to="/register">
                   <button
-                    className={`cursor-pointer w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-95 ${plan.highlight ? "bg-green-500 text-zinc-950 hover:bg-green-400" : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"}`}
+                    className={`cursor-pointer w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-95 ${plan.highlight ? "bg-primary text-primary-foreground hover:bg-primary/80" : "border border-muted text-foreground hover:border-muted-foreground hover"}`}
                   >
                     {plan.cta}
                   </button>
@@ -367,7 +364,7 @@ function HomePage() {
             }}
           />
           <div className="relative">
-            <h2 className="text-4xl sm:text-5xl font-bold text-zinc-100 mb-6 leading-tight">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
               A csapatod megérdemel egy jobb
               <br />
               módot a közös munkára.
@@ -389,14 +386,14 @@ function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-green-500 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center">
                 <IconBolt size={12} className="text-zinc-950 stroke-[2.5]" />
               </div>
-              <span className="font-bold text-zinc-300 tracking-tight text-sm">
-                planit<span className="text-green-400">app</span>
+              <span className="font-bold text-foreground tracking-tight text-sm">
+                planit<span className="text-primary">app</span>
               </span>
             </div>
-            <div className="flex items-center gap-6 text-xs text-zinc-600">
+            <div className="flex items-center gap-6 text-xs text-muted-foreground">
               {[
                 "Adatvédelmi nyilatkozat",
                 "Felhasználási feltételek",
@@ -407,13 +404,13 @@ function HomePage() {
                 <a
                   key={l}
                   href="#"
-                  className="hover:text-zinc-400 transition-colors"
+                  className="hover:muted-foreground transition-colors"
                 >
                   {l}
                 </a>
               ))}
             </div>
-            <p className="text-xs text-zinc-700">
+            <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} planitapp. Minden jog fenntartva.
             </p>
           </div>

@@ -14,15 +14,15 @@ export default function OAuthButton({ provider }: { provider: Provider }) {
 
     const handleOAuthLogin = async () => {
         startTransition(async () => {
-            const { error } = await authClient.signIn.social({
+            await authClient.signIn.social({
                 provider: provider.id,
                 callbackURL: '/projects',
                 errorCallbackURL: '/error?error=oauth_failed',
+            }, {
+                onError: (error) => {
+                    console.error('OAuth login failed:', error)
+                }
             });
-            
-            if (error) {
-                console.error('OAuth login failed:', error)
-            }
         });
     }
     
