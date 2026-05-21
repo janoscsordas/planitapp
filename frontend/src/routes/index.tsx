@@ -55,12 +55,12 @@ function HomePage() {
         </h1>
 
         <p className="animate-slide-up delay-200 text-base sm:text-lg text-zinc-400 max-w-xl mx-auto mb-8 leading-relaxed">
-          Projektek, feladatok, élő chat, aktivitás ablakok, és bug tracking —
+          Projektek, feladatok, élő chat, aktivitás ablakok, és probléma kezelés
           mindez egy helyen. Hívd meg a csapatod és lássatok munkához most.
         </p>
 
         <div className="animate-slide-up delay-300 flex flex-col sm:flex-row items-center gap-3 mb-10">
-          <Link to="/register" search={{ redirect: "/projects" }}>
+          <Link to="/register">
             <button className="cursor-pointer flex items-center gap-2 px-6 py-3 rounded-xl bg-green-500 text-zinc-950 font-semibold text-sm hover:bg-green-400 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-green-500/20">
               Kezdj bele <IconArrowRight size={16} />
             </button>

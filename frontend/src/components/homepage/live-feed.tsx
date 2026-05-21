@@ -1,6 +1,5 @@
 import {
   IconFlag,
-  IconGitBranch,
   IconBug,
   IconCheck,
   IconMessage2,
@@ -9,7 +8,6 @@ import { useEffect, useState } from "react";
 
 /* ─── Floating live feed pill ─── */
 const feedItems = [
-  { icon: IconBug, color: "text-red-400", text: "Bug #47 megoldva @alex által" },
   {
     icon: IconCheck,
     color: "text-green-400",
@@ -21,9 +19,9 @@ const feedItems = [
     text: "Új üzenet a #frontend szobában",
   },
   {
-    icon: IconGitBranch,
+    icon: IconBug,
     color: "text-purple-400",
-    text: "PR merged: feature/onboarding",
+    text: "Probléma #47 megoldva @alex által",
   },
   {
     icon: IconFlag,

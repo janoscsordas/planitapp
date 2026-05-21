@@ -1,6 +1,7 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { Button } from '#/components/ui/button'
+import { IconMoon } from '@tabler/icons-react'
+import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
 import z from 'zod'
-import MeshBackground from '#/components/homepage/animated-mesh-background'
 
 export const Route = createFileRoute('/_guest')({
   component: GuestLayout,
@@ -19,9 +20,15 @@ export const Route = createFileRoute('/_guest')({
 
 function GuestLayout() {
   return (
-    <main className='relative min-h-svh flex items-center justify-center px-4'>
-      <MeshBackground />
-      <Outlet />
+    <main className='relative min-h-svh w-full flex items-center justify-center px-4'>
+      <nav className='absolute top-0 left-0 p-4 flex items-center gap-2 justify-between w-full'>
+        <Link to="/" className='text-xl text-green-500 font-bold'>Planit<span className='text-foreground'>App</span></Link>
+
+        <Button variant="outline" size="icon"><IconMoon /></Button>
+      </nav>
+      <div className='py-12 w-full flex items-center justify-center'>
+        <Outlet />
+      </div>
     </main>
   )
 }

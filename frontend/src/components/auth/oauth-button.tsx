@@ -9,7 +9,7 @@ type Provider = {
     icon: React.ReactNode
 }
 
-export default function OAuthButton({ provider }: { provider: Provider }) {
+export default function OAuthButton({ provider, ...props }: { provider: Provider } & React.ComponentProps<typeof Button>) {
     const [isPending, startTransition] = useTransition()
 
     const handleOAuthLogin = async () => {
@@ -27,7 +27,7 @@ export default function OAuthButton({ provider }: { provider: Provider }) {
     }
     
     return (
-        <Button variant="outline" onClick={handleOAuthLogin} disabled={isPending} className="w-full">
+        <Button variant="outline" onClick={handleOAuthLogin} disabled={isPending} className="w-full" {...props}>
             {isPending ? 
                 <Spinner /> 
                 : 

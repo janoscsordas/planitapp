@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useForm } from "@tanstack/react-form";
 import z from "zod";
-import { Card, CardContent } from "#/components/ui/card";
 import {
   FieldDescription,
   FieldGroup,
@@ -9,12 +8,11 @@ import {
 } from "#/components/ui/field";
 import { Field, FieldLabel, FieldError } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
-import { IconBrandGithub } from "@tabler/icons-react";
 import { Button } from "#/components/ui/button";
 import { authClient } from "#/lib/auth-client";
-import OAuthButton from "#/components/auth/oauth-button";
 import { Spinner } from "#/components/ui/spinner";
 import { toast } from "sonner";
+import OAuthField from "#/components/auth/oauth-field";
 
 export const Route = createFileRoute("/_guest/register")({
   component: RegisterPage,
@@ -84,157 +82,137 @@ function RegisterPage() {
   });
 
   return (
-    <div className="w-full max-w-sm md:max-w-4xl">
+    <div className="w-full max-w-lg">
       <div className="flex flex-col gap-6">
-        <Card className="overflow-hidden p-0">
-          <CardContent className="grid p-0 md:grid-cols-2">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                form.handleSubmit();
-              }}
-              className="p-6 md:p-8"
-              id="register-form"
-            >
-              <FieldGroup>
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <h1 className="text-2xl font-bold">Fiók Regisztráció</h1>
-                  <p className="text-sm text-balance text-muted-foreground">
-                    Add meg az e-mail címed a fiók létrehozásához
-                  </p>
-                </div>
-                <form.Field
-                  name="email"
-                  children={(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>Email cím</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          type="email"
-                          placeholder="m@példa.hu"
-                          autoComplete="off"
-                        />
-                        {field.state.meta.isTouched &&
-                          !field.state.meta.isValid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                      </Field>
-                    );
-                  }}
-                />
-                <form.Field
-                  name="password"
-                  children={(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          type="password"
-                          placeholder="**********"
-                          autoComplete="off"
-                        />
-                        {field.state.meta.isTouched &&
-                          !field.state.meta.isValid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                      </Field>
-                    );
-                  }}
-                />
-                <form.Field
-                  name="passwordConfirm"
-                  children={(field) => {
-                    const isInvalid =
-                      field.state.meta.isTouched && !field.state.meta.isValid;
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
-                          Jelszó megerősítése
-                        </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          type="password"
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder="**********"
-                          aria-invalid={isInvalid}
-                        />
-                        {field.state.meta.isTouched &&
-                          !field.state.meta.isValid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                      </Field>
-                    );
-                  }}
-                />
-                <form.Subscribe
-                  selector={(state) => [state.canSubmit, state.isSubmitting]}
-                  children={([, isSubmitting]) => (
-                    <Field orientation="horizontal">
-                      <Button
-                        className="w-full"
-                        type="submit"
-                        form="register-form"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? <Spinner /> : "Regisztráció"}
-                      </Button>
-                    </Field>
-                  )}
-                />
-                <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                  Vagy az alábbiakkal
-                </FieldSeparator>
-
-                <Field className="flex flex-col gap-4">
-                  <OAuthButton
-                    provider={{
-                      id: "github",
-                      name: "Folytatás GitHub fiókkal",
-                      icon: <IconBrandGithub />,
-                    }}
-                  />
-                </Field>
-
-                <FieldDescription className="text-center">
-                  Már van fiókod? <Link to="/login">Jelentkezz be!</Link>
-                </FieldDescription>
-              </FieldGroup>
-            </form>
-
-            {/* Placeholder Image */}
-
-            <div className="relative hidden bg-muted md:block">
-              <img
-                src="/placeholder.svg"
-                alt="Image"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-              />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+          className="p-6 md:p-8"
+          id="register-form"
+        >
+          <FieldGroup>
+            <div className="text-center">
+              <h1 className="text-2xl font-bold mb-2">Fiók Regisztráció</h1>
+              <p className="text-sm text-balance text-muted-foreground">
+                Add meg az e-mail címed a fiók létrehozásához
+              </p>
             </div>
-          </CardContent>
-        </Card>
-        <FieldDescription className="px-6 text-center">
-          A folytatással elfogadom a{" "}
-          <Link to="/">Felhasználói Feltételeket</Link> és az{" "}
-          <Link to="/">Adatvédelmi Szabályzatot</Link>.
+            <form.Field
+              name="email"
+              children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Email cím</FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                      type="email"
+                      placeholder="m@példa.hu"
+                      autoComplete="off"
+                    />
+                    {field.state.meta.isTouched &&
+                      !field.state.meta.isValid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                  </Field>
+                );
+              }}
+            />
+            <FieldGroup className="grid sm:grid-cols-2">
+              <form.Field
+                name="password"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        aria-invalid={isInvalid}
+                        type="password"
+                        placeholder="**********"
+                        autoComplete="off"
+                      />
+                      {field.state.meta.isTouched &&
+                        !field.state.meta.isValid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                    </Field>
+                  );
+                }}
+              />
+              <form.Field
+                name="passwordConfirm"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>
+                        Jelszó megerősítése
+                      </FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        type="password"
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="**********"
+                        aria-invalid={isInvalid}
+                      />
+                      {field.state.meta.isTouched &&
+                        !field.state.meta.isValid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                    </Field>
+                  );
+                }}
+              />
+            </FieldGroup>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([, isSubmitting]) => (
+                <Field orientation="horizontal">
+                  <Button
+                    className="w-full"
+                    type="submit"
+                    form="register-form"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? <Spinner /> : "Regisztráció"}
+                  </Button>
+                </Field>
+              )}
+            />
+            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-background">
+              Vagy az alábbiakkal
+            </FieldSeparator>
+
+            <OAuthField />
+
+            <FieldDescription className="text-center">
+              A folytatással elfogadom a{" "}
+              <Link to="/">Felhasználói Feltételeket</Link> és az{" "}
+              <Link to="/">Adatvédelmi Szabályzatot</Link>.
+            </FieldDescription>
+          </FieldGroup>
+        </form>
+        <FieldDescription className="text-center">
+          Már van fiókod? <Link to="/login">Jelentkezz be!</Link>
         </FieldDescription>
       </div>
     </div>
