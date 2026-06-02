@@ -26,8 +26,11 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
 
+    "types": ["bun"],
     // Path aliases
     "baseUrl": ".",
+    // Suppress deprecation warning for baseUrl until TS 7.0 migration
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@types/*": ["types/*"]
     }
