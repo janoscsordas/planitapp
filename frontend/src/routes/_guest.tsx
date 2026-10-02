@@ -1,6 +1,5 @@
-import { Button } from '#/components/ui/button'
-import { IconMoon } from '@tabler/icons-react'
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router'
+import { ModeToggle } from '#/components/mode-toggle'
 import z from 'zod'
 
 export const Route = createFileRoute('/_guest')({
@@ -24,7 +23,7 @@ function GuestLayout() {
       <nav className='absolute top-0 left-0 p-4 flex items-center gap-2 justify-between w-full'>
         <Link to="/" className='text-xl text-green-500 font-bold'>Planit<span className='text-foreground'>App</span></Link>
 
-        <Button variant="outline" size="icon"><IconMoon /></Button>
+        <ModeToggle />
       </nav>
       <div className='py-12 w-full flex items-center justify-center'>
         <Outlet />

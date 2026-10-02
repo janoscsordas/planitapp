@@ -6,6 +6,8 @@ import { Toaster } from 'sonner'
 import NotFoundRoot from '../components/not-found/not-found-root'
 import type { MyRouterContext } from '#/main'
 
+import { ThemeProvider } from "@/components/theme-provider"
+
 import '../styles.css'
 import { TooltipProvider } from '#/components/ui/tooltip'
 
@@ -19,22 +21,24 @@ function RootComponent() {
   const queryClient = new QueryClient()
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Outlet />
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'TanStack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
-        <Toaster position="top-center" richColors />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="planitapp-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Outlet />
+          <TanStackDevtools
+            config={{
+              position: 'bottom-right',
+            }}
+            plugins={[
+              {
+                name: 'TanStack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+          <Toaster position="top-center" richColors />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   )
 }

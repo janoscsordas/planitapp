@@ -131,7 +131,7 @@ function LoginPage() {
                       <FieldLabel htmlFor={field.name}>Jelszó</FieldLabel>
                       <Link
                         to="/forgot-password"
-                        className="ml-auto inline-block text-xs underline-offset-4 hover:underline"
+                        className="ml-auto inline-block text-xs underline-offset-4 hover:underline text-muted-foreground"
                       >
                         Elfelejtettem a jelszavam
                       </Link>

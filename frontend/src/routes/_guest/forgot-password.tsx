@@ -155,7 +155,7 @@ function RouteComponent() {
             Mégis emlékszel a jelszavadra?{" "}
             <Link
               to="/login"
-              className="text-foreground hover:underline underline-offset-4 font-medium"
+              className="underline underline-offset-4 font-medium"
             >
               Jelentkezz be
             </Link>

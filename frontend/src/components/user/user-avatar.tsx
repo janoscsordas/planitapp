@@ -13,7 +13,7 @@ import {
   IconSettings,
   IconLogout,
 } from "@tabler/icons-react";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import { authClient } from "#/lib/auth-client";
 import {
@@ -39,7 +39,6 @@ export default function UserAvatar({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   // TODO: Fix this Logout function. It should redirect to the login page correctly.
   // TODO: Now it doesn't do that, probably a race condition with the _guest beforeLoad function.
@@ -51,8 +50,12 @@ export default function UserAvatar({
             toast.error("Hiba történt a kijelentkezés során!");
           },
           onSuccess: () => {
-            toast.success("Sikeresen kijelentkeztél!");
-            router.navigate({ to: "/login", replace: true, search: { redirect: undefined } });
+            toast.success("Sikeresen kijelentkeztél! Átirányítunk a bejelentkezés oldalra...");
+
+            setTimeout(() => {
+              window.location.href = "/login";
+              // router.navigate({ to: "/login", replace: true, search: { redirect: undefined } });
+            }, 1000)
           },
         },
       });
@@ -126,7 +129,7 @@ export default function UserAvatar({
           </AlertDialogMedia>
           <AlertDialogTitle>Biztosan kijelentkezel?</AlertDialogTitle>
           <AlertDialogDescription>
-            Ha kijelentkezel, legközelebb újra be kell jelentkezned.
+            Ha most kijelentkezel, legközelebb újra be kell lépned.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -2,26 +2,27 @@ import { createAuthClient } from "better-auth/react"
 import { lastLoginMethodClient, organizationClient } from "better-auth/client/plugins"
 
 export const authClient = createAuthClient({
-    plugins: [
-        lastLoginMethodClient(),
-        organizationClient()
-    ],
-    sessionOptions: {
-        refetchOnWindowFocus: false,
-        refetchWhenOffline: true,
-    }
+  plugins: [
+    lastLoginMethodClient(),
+    organizationClient()
+  ],
+  sessionOptions: {
+    refetchOnWindowFocus: false,
+    refetchWhenOffline: true,
+  },
+  baseURL: "http://localhost:3000"
 })
 
 export async function signInWithGitHub() {
-    await authClient.signIn.social({
-        provider: "github",
-        callbackURL: "/projects",
-        errorCallbackURL: "/error",
-    })
+  await authClient.signIn.social({
+    provider: "github",
+    callbackURL: "/projects",
+    errorCallbackURL: "/error",
+  })
 }
 
 // Returns the last used login method for the current user
 // We display this info in the UI
 export function getLastLoginMethodForUser() {
-    return authClient.getLastUsedLoginMethod()
+  return authClient.getLastUsedLoginMethod()
 }
